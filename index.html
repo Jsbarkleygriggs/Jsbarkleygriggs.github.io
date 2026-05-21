@@ -289,15 +289,8 @@
 
       <!-- ── initial content loads inline; HTMX swaps it on tab click ── -->
       <main id="content">
-        <!-- about partial inlined so page works without JS too -->
-        <div class="prose" id="about-partial">
-          <h2>// about</h2>
-          <p>
-            Based out of Fairbanks Alaska, I design, develop, build, and deploy instrumentation systems for arctic and subarctic climates.
-          </p>
-          <p>
-            At present I am prototyping non-regulatory PM10 monitors for the Alaska Department of Environmental Conservation. Previously, my work has included All-sky systems, and Flux-gate magnetometers.
-          </p>
+        <div hx-get="partials/about.html" hx-trigger="load">
+          loading...
         </div>
       </main>
 
