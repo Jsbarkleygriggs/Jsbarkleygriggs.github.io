@@ -1,0 +1,239 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #141412;
+  --surface: #1e1d1b;
+  --border: #2e2d2a;
+  --text: #e8e5de;
+  --muted: #8a8680;
+  --accent: #6da4d4;
+  --accent-bg: #1a2535;
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 2rem 1rem 4rem;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('bg.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(4px);
+  scale: 1.1; /* prevents blur edges showing */
+  z-index: -1;
+}
+
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ── header ── */
+header {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.name {
+  font-family: var(--mono);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.tagline {
+  font-size: 0.95rem;
+  color: var(--muted);
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+/* ── link bar ── */
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.link-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+  background: var(--surface);
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.link-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.link-pill svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── nav tabs ── */
+nav {
+  display: flex;
+  gap: 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  padding: 0.6rem 1.1rem;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+  user-select: none;
+}
+
+.tab:hover { color: var(--text); }
+
+.tab.active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+/* ── content area ── */
+#content {
+  min-height: 200px;
+}
+
+#content.htmx-request {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+/* ── partials share these styles ── */
+.prose { line-height: 1.75; color: var(--text); }
+.prose p { margin-bottom: 1rem; }
+.prose p:last-child { margin-bottom: 0; }
+.prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.prose h2 {
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  text-transform: lowercase;
+}
+
+.item-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+.item {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  transition: border-color 0.15s;
+}
+.item:hover { border-color: var(--accent); }
+.item-title { font-weight: 500; margin-bottom: 0.25rem; }
+.item-meta { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); }
+
+/* ── footer ── */
+footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* ── fieldwork ── */
+.field-work-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.field-work-list .item {
+  padding: 2rem 0;
+  border-bottom: none;
+}
+
+.field-work-list .item:last-child {
+  border-bottom: none;
+}
+
+.fw-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+/* Flips photo to right side on odd items */
+.fw-row.reverse {
+  direction: rtl;
+}
+.fw-row.reverse > * {
+  direction: ltr;
+}
+
+.fw-photo img {
+  width: 100%;
+  /*aspect-ratio: 6/5;*/
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.fw-caption {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0.5rem 0 0;
+  line-height: 1.5;
+}
+
+.fw-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0rem 1.5rem;
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 600px) {
+  .fw-row,
+  .fw-row.reverse {
+    grid-template-columns: 1fr;
+    direction: ltr;
+  }
+}
+
