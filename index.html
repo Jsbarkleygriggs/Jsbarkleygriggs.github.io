@@ -108,48 +108,51 @@
 
       <footer>
         built with <a href="https://htmx.org" style="color:inherit">htmx</a> &amp;
-        hosted on <a href="https://pages.github.com" style="color:inherit">github pages</a> <br>
+        hosted on <a href="https://pages.github.com" style="color:inherit">github pages</a>
+        &nbsp; | &nbsp;
         h/l → navigate tabs
       </footer>
 
     </div>
 
     <script>
-    function setActive(el) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    }
+      function setActive(el) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+      }
     </script>
 
     <script>
-    function setActive(el) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    }
+      document.addEventListener('keydown', (e) => {
+      // don't hijack typing
+        if (
+          e.target.tagName === 'INPUT' ||
+          e.target.tagName === 'TEXTAREA' ||
+          e.target.isContentEditable
+        ) {
+          return;
+        }
 
-    document.addEventListener('keydown', (e) => {
-    // don't hijack typing
-    if (
-    e.target.tagName === 'INPUT' ||
-    e.target.tagName === 'TEXTAREA' ||
-    e.target.isContentEditable
-    ) {
-    return;
-    }
+        const tabs = [...document.querySelectorAll('.tab')];
+        const current = tabs.findIndex(t => t.classList.contains('active'));
 
-    const tabs = [...document.querySelectorAll('.tab')];
-    const current = tabs.findIndex(t => t.classList.contains('active'));
+        if (e.key === 'h') {
+          const prev = (current - 1 + tabs.length) % tabs.length;
+          tabs[prev].click();
+        }
 
-    if (e.key === 'h') {
-    const prev = (current - 1 + tabs.length) % tabs.length;
-    tabs[prev].click();
-    }
+        if (e.key === 'l') {
+          const next = (current + 1) % tabs.length;
+          tabs[next].click();
+        }
+      });
+    </script>
 
-    if (e.key === 'l') {
-    const next = (current + 1) % tabs.length;
-    tabs[next].click();
-    }
-    });
+    <script>
+      document.addEventListener('click', e => {
+        const a = e.target.closest('.anchor-link');
+        if (a) navigator.clipboard.writeText(a.href);
+      });
     </script>
   </body>
 </html>
