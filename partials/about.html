@@ -1,12 +1,35 @@
-<div class="prose">
-  <h2>// about</h2>
-  <p>
-    Based out of Fairbanks Alaska, I design, develop, build, and deploy instrumentation systems for arctic and subarctic climates.
-  </p>
-  <p>
-    At present I have an internship at the Alaska Department of Environmental Conservation where I perform weekly maintenance on regulatory instruments and am prototyping an in-house non-regulatory PM10 monitor.
-  </p>
-  <p>
-    Previously, my work has included developing and working with water depth sensors, All-sky systems, and Flux-gate magnetometers.
-  </p>
+<style>
+  @keyframes enter-left {
+    from { transform: translateX(-30px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes slide-right {
+    from { transform: translateX(-15%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  .about-layout {
+    display: flex; gap: 2rem; align-items: flex-start;
+  } 
+  .about-img {
+    width: 100%; animation: enter-left 0.6s ease-out both;
+  }
+  .prose {
+    animation: slide-right 0.6s ease-out both;
+  }
+</style>
+
+<h2>// about<a href="#about" class="anchor-link">🔗</a></h2>
+<div class="about-layout">
+  <img class="about-img" src="images/profile.jpg" alt="Jonah Barkley-Griggs" />
+  <div class="prose">
+    <p>
+      Based out of Fairbanks Alaska, I design, develop, build, and deploy instrumentation systems for arctic and subarctic climates.
+    </p>
+    <p>
+      At present I have an internship at the Alaska Department of Environmental Conservation where I perform weekly maintenance on regulatory instruments and am prototyping an in-house non-regulatory PM10 monitor.
+    </p>
+    <p>
+      Previously, my work has included developing and working with water depth sensors, All-sky systems, and Flux-gate magnetometers.
+    </p>
+  </div>
 </div>

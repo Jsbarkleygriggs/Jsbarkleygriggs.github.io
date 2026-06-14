@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="icons/favicon.png" type="image/png">
     <meta name="google-site-verification" content="KJeWqQTkk-X4gULXFw3VEvosNWEAcsPWlkD49jURq_0" />
   </head>
   <body>
@@ -24,25 +25,25 @@
 
           <a class="link-pill" href="https://orcid.org/0009-0007-9132-3954" target="_blank" rel="noopener">
             <!-- ORCID icon -->
-            <img src="images/orcid.svg" alt="" aria-hidden="true" width="14" height="14" />
+            <img src="icons/orcid.svg" alt="" aria-hidden="true" width="14" height="14" />
             Orcid
           </a>
 
           <a class="link-pill" href="https://github.com/Jsbarkleygriggs" target="_blank" rel="noopener">
             <!-- Github / git icon -->
-            <img src="images/Github.svg" alt="" aria-hidden="true" width="14" height="14" />
+            <img src="icons/Github.svg" alt="" aria-hidden="true" width="14" height="14" />
             Github
           </a>
 
           <a class="link-pill" href="https://codeberg.org/J_S_Barkely-Griggs" target="_blank" rel="noopener">
             <!-- Codeberg / git icon -->
-            <img src="images/Codeberg.svg" alt="" aria-hidden="true" width="14" height="14" />
+            <img src="icons/Codeberg.svg" alt="" aria-hidden="true" width="14" height="14" />
             Codeberg
           </a>
 
           <a class="link-pill" href="https://osf.io/user/9reum" target="_blank" rel="noopener">
             <!-- OSF / git icon -->
-            <img src="images/OSF.svg" alt="" aria-hidden="true" width="14" height="14" />
+            <img src="icons/OSF.svg" alt="" aria-hidden="true" width="14" height="14" />
             OSF
           </a>
 
@@ -53,8 +54,6 @@
             </svg>
             Email
           </a>
-
-          <!-- add more pills here, e.g. Mastodon, personal blog, CV PDF -->
 
         </div>
       </header>
@@ -89,17 +88,8 @@
           hx-on:click="setActive(this)">
           projects
         </div>
-        <!--  <div class="tab"
-          hx-get="partials/photography.html"
-          hx-target="#content"
-          hx-swap="innerHTML"
-          hx-on:click="setActive(this)">
-          photography
-        </div>
-        -->
       </nav>
 
-      <!-- ── initial content loads inline; HTMX swaps it on tab click ── -->
       <main id="content">
         <div hx-get="partials/about.html" hx-trigger="load">
           loading...
@@ -124,15 +114,6 @@
 
     <script>
       document.addEventListener('keydown', (e) => {
-      // don't hijack typing
-        if (
-          e.target.tagName === 'INPUT' ||
-          e.target.tagName === 'TEXTAREA' ||
-          e.target.isContentEditable
-        ) {
-          return;
-        }
-
         const tabs = [...document.querySelectorAll('.tab')];
         const current = tabs.findIndex(t => t.classList.contains('active'));
 
@@ -149,10 +130,31 @@
     </script>
 
     <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const hash = location.hash;
+        if (!hash) return;
+        const tabName = hash.slice(1).split('-')[0];
+        const tab = [...document.querySelectorAll('.tab')]
+          .find(t => t.getAttribute('hx-get') === `partials/${tabName}.html`);
+        if (tab) htmx.trigger(tab, 'click');
+      });
+
       document.addEventListener('click', e => {
         const a = e.target.closest('.anchor-link');
-        if (a) navigator.clipboard.writeText(a.href);
+        if (a) {
+          const activeTab = document.querySelector('.tab.active').getAttribute('hx-get').replace('partials/', '').replace('.html', '');
+          const url = `${location.origin}${location.pathname}#${activeTab}-${a.hash.slice(1)}`;
+          navigator.clipboard.writeText(url);
+        }
       });
     </script>
+
+    <script>
+      document.addEventListener('htmx:afterSwap', () => {
+        const el = document.getElementById(location.hash.split('-').slice(1).join('-'));
+        if (el) el.scrollIntoView();
+      });
+    </script>
+
   </body>
 </html>
