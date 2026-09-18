@@ -1,0 +1,654 @@
+
+<!--
+<tr class="gear-row">
+<td class="col-index">0</td>
+<td class="col-name">
+<div class="alt-group">
+<span class="alt-item"><a href="">option one</a></span>
+<span class="alt-sep">or</span>
+<span class="alt-item"><a href="">option two</a></span>
+</div>
+<details class="more-info">
+<summary>More info</summary>
+<p>
+this is an example <br>
+heres more info
+</p>
+</details>
+</td>
+<td class="col-price" data-value="900">$900</td>
+</tr>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Someday List</title>
+    <style>
+    :root{ --bg:#fff; --fg:#1a1a1a; --border:#ddd; --head:#f2f2f2; --hover:#f7f7f7; --accent:#2563eb; }
+    @media (prefers-color-scheme: dark){
+      :root:not([data-theme="light"]){ --bg:#1a1a1a; --fg:#eee; --border:#333; --head:#242424; --hover:#242424; --accent:#60a5fa; }
+    }
+    body{ background:var(--bg); color:var(--fg); font-family:system-ui,sans-serif; margin:0; padding:1.5rem; }
+    h1{ font-size:1.1rem; margin:0 0 .8rem; }
+    .wrap{ overflow-x:auto; }
+    table{ border-collapse:collapse; width:100%; min-width:600px; font-size:.9rem; }
+    th,td{ border-bottom:1px solid var(--border); padding:.45rem .6rem; text-align:left; }
+    th{ background:var(--head); cursor:pointer; user-select:none; }
+    th .arrow{ opacity:.5; margin-left:4px; font-size:.75em; }
+    th[data-sort]{ position:relative; }
+    th[data-sort]:hover{ color:var(--accent); }
+    th[data-sort] .arrow{ opacity:.35; margin-left:4px; font-size:.75em; }
+    th[data-sort] .arrow.active{ opacity:1; }
+    .col-price{ text-align:right; font-variant-numeric:tabular-nums; }
+    tr:hover td{ background:var(--hover); }
+    .alt-group{ display:flex; gap:.4em; flex-wrap:wrap; align-items:baseline; }
+    .alt-sep{ color:var(--muted, #888); font-style:italic; font-size:.85em; }
+    details.more-info{ margin-top:.25rem; font-size:.85rem; }
+    details.more-info summary{
+      cursor:pointer; color:var(--accent); list-style:none; display:inline-block;
+    }
+    details.more-info summary::-webkit-details-marker{ display:none; }
+    details.more-info summary::before{ content:"+ "; }
+    details.more-info[open] summary::before{ content:"– "; }
+    details.more-info p{ margin:.35rem 0 0; color:var(--fg); opacity:.85; }
+    </style>
+  </head>
+  <body>
+    <h1>Someday List</h1>
+    <div class="wrap">
+      <table id="gear-table">
+        <thead>
+          <tr>
+            <th data-sort="col-index" data-type="num" title="Click to sort">Rank<span class="arrow">(sort ⇅)</span></th>
+            <th data-sort="col-name" data-type="text" title="Click to sort">Item<span class="arrow">(sort ⇅)</span></th>
+            <th data-sort="col-price" data-type="num" title="Click to sort">Approx. Cost<span class="arrow">(sort ⇅)</span></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr class="gear-row">
+            <td class="col-index">1</td>
+            <td class="col-name">
+              <div class="alt-group">
+                <span class="alt-item"><a href="https://hownot2.com/products/pinch">Edelrid Pinch</a></span>
+                <span class="alt-sep">or</span>
+                <span class="alt-item"><a href="https://hownot2.com/products/grigri-belay-device">Petzl GriGri</a></span>
+              </div>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  Pinch is preferred for safety and is sometimes the same price or cheaper.<br>
+                  USE: climbing, rigging.
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="100">$90-$130</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">1</td>
+            <td class="col-name">
+              <div class="alt-group">
+                <span class="alt-item"><a href="https://hownot2.com/products/micro-traxion">Petzl Microtraxion</a></span>
+                <span class="alt-sep">or</span>
+                <span class="alt-item"><a href="https://hownot2.com/products/spoc">Edelrid SPOC</a></span>
+              </div>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  USE: climbing, rigging, self-rescue.
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="130">$130-$160</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">1</td>
+            <td class="col-name">PDF scans of hidden/unmarked-trail maps (grandpa)</td>
+            <td class="col-price" data-value="0">$0</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">3</td>
+            <td class="col-name">Voile UltraVector BC</td>
+            <td class="col-price" data-value="550">$350-$600</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">3</td>
+            <td class="col-name">
+              <a href="https://www.alpinstore.com/en/590214-scarpa-tx-pro-black-red-.html">TTS Boots</a>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  USE: Ski<br>
+                  Size: Mondo 29
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="700">$600-$900</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">4</td>
+            <td class="col-name">
+              <div class="alt-group">
+                <span class="alt-item"><a href="https://www.rei.com/product/238320/msr-whisperlite-international-stove">Whitegas stove</a></span>
+                <span class="alt-sep">or</span>
+                <span class="alt-item"><a href="https://www.garagegrowngear.com/products/triad-multi-fuel-stove">alcohol stove</a></span>
+                <!--https://www.amazon.com/dp/B0D19F94BK?tag=carcbest-20-->
+              </div>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  USE: winter backpacking, mountaineering, backpacking internationally.
+
+                  The international whisperlight is THE whitegass stove of the backcountry: reliable, efficient, effective in -60f, a staple of the community.
+                  Alcohol stoves are so simple and cheap they almost can't go wrong.
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="90">$30-$160</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">5</td>
+            <td class="col-name">
+              Crevasse rescue course
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  USE: I'm traversing glaciers already, might as well do it safely
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="300">$300</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">6</td>
+            <td class="col-name">
+              <a href="https://mukluks.com/products/yukon-mens?variant=49407223955729">Mukluks</a>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  wwwaaaarrrmmmm<br>
+                  Size: Mens 11 double wide or Mens 12 wide
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="300">$300</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">7</td>
+            <td class="col-name">
+              <a href="https://www.voile.com/voile-tts-spring-cartridges.html">Voile TTS Cartridges</a>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  USE: Ski: randonee
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="80">$80</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">7</td>
+            <td class="col-name"><a href="https://www.rei.com/search?q=fleece+pants">Winter midlayer pants</a></td>
+            <td class="col-price" data-value="80">$70-$90</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">8</td>
+            <td class="col-name">
+              Pant leg gaiters
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  USE: ice climbing & deep snow.<br>
+                  Keeps my crampons from shredding my pants. Keeps snow out of my boots.
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="50">$50</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">9</td>
+            <td class="col-name">
+              <a href="https://www.cotopaxi.com/products/fuego-down-pant-mens-redesign?variant=42450888884285&utm_campaign=NE|Google|Shopping|Conversion|Standard|NA|US|Ecomm|Tier-B-Insulation-Apparel|NonBrand&utm_source=google&utm_medium=cpc&gad_source=1&gad_campaignid=23255331581&gclid=EAIaIQobChMI4K6uzsv3lgMVTPHCBB27yi0FEAQYASABEgKzWvD_BwE">Winter camp pants</a>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  wwwaaaarrrmmmm<br>
+                  Down (non-synthetic)<br>
+                  Chaps or pants
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="250">$150-$400</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">10</td>
+            <td class="col-name">
+              P2 License, Classes, and Equipment
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  Paragliding
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="3000">$3000-$5000</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">11</td>
+            <td class="col-name">
+              <a href="https://www.xterrawetsuits.com/products/volt-sleeveless">Sleeveless triathlon wetsuit</a>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  Size: Medium<br>
+                  Discount (60%): "R-ARCTIC"
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="200">$200-$400</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">12</td>
+            <td class="col-name">Alpine/mountaineering bivy</td>
+            <td class="col-price" data-value="250">$250</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">13</td>
+            <td class="col-name">
+              Clipless pedals, cleats &amp; shoes
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  USE: cycling
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="150">$150</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">13</td>
+            <td class="col-name">
+              Half-frame bag
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  USE: cycling
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="60">$60</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">14</td>
+            <td class="col-name"><a href="https://ermineskate.com/">Nordic/kite skates</a></td>
+            <td class="col-price" data-value="300">$300</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">15</td>
+            <td class="col-name">Film photography camera with working meter</td>
+            <td class="col-price" data-value="150">$150</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">16</td>
+            <td class="col-name">New base/thermal layers</td>
+            <td class="col-price" data-value="70">$70</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">17</td>
+            <td class="col-name"><a href="https://evolvedsupplyco.com/collections/all-products/products/the-1100-pot">Cook mug w/ spout &amp; lid, sized to fuel+stove</a></td>
+            <td class="col-price" data-value="50">$50</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">18</td>
+            <td class="col-name">Kicker skins or climbing skins</td>
+            <td class="col-price" data-value="150">$150</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">19</td>
+            <td class="col-name">“Mountaineering: Freedom of the Hills” book</td>
+            <td class="col-price" data-value="30">$30</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">20</td>
+            <td class="col-name">Electric drill</td>
+            <td class="col-price" data-value="60">$60</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">20</td>
+            <td class="col-name">
+              <a href="https://hownot2.com/search?q=ascender&type=product">Ascender</a>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  Must have a handle (NOT Tibloc/Ropeman)
+                  USE: climbing, rigging, self-rescue
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="80">$80-$100</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">20</td>
+            <td class="col-name">
+              Logic analyzer
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  Linux-compatible, sigrok compatible
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="15">$15</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">20</td>
+            <td class="col-name">Soldering iron (hot, 350°C+ min)</td>
+            <td class="col-price" data-value="40">$30-50</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">20</td>
+            <td class="col-name">Sandals</td>
+            <td class="col-price" data-value="40">$40</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">21</td>
+            <td class="col-name">
+              <div class="alt-group">
+                <span class="alt-item"><a href="https://blackdiamondequipment.com/products/expedition-3-whippet">Whippet</a></span>
+                <span class="alt-sep">or</span>
+                <span class="alt-item"><a href="https://www.rei.com/product/252777/camp-corsa-alpine-ice-axe">Self-arrest axe</a></span>
+              </div>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  USE: Self rescue. (Used when skiing or hiking in snow to keep from falling off a cliff when you slip)
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="150">$100-$200</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">22</td>
+            <td class="col-name">
+              <a href="https://www.rei.com/product/242333/shokz-openswim-pro-headphones">Bone conduction headphones (swim-rated)</a>
+            </td>
+            <td class="col-price" data-value="230">$200-$250</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">23</td>
+            <td class="col-name"><a href="https://hownot2.com/products/connect-adjust">Adjustable “lanyard”-type PAS</a></td>
+            <td class="col-price" data-value="75">$75</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">24</td>
+            <td class="col-name"><a href="https://hownot2.com/collections/cams">Climbing cams</a></td>
+            <td class="col-price" data-value="70">$70</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">25</td>
+            <td class="col-name"><a href="https://hownot2.com/collections/stoppers-nuts">Climbing nuts</a></td>
+            <td class="col-price" data-value="60">$60</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">26</td>
+            <td class="col-name">Record player</td>
+            <td class="col-price" data-value="150">$150</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">27</td>
+            <td class="col-name">Avalanche shovel</td>
+            <td class="col-price" data-value="50">$50</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">28</td>
+            <td class="col-name">Underquilt</td>
+            <td class="col-price" data-value="150">$150</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">29</td>
+            <td class="col-name">Properly sized camping hammock</td>
+            <td class="col-price" data-value="100">$100</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">30</td>
+            <td class="col-name">Ultra-thick wool socks</td>
+            <td class="col-price" data-value="20">$20</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">31</td>
+            <td class="col-name">Fitness tracker (HR monitor, phone-free GPS, good battery)</td>
+            <td class="col-price" data-value="250">$250</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">32</td>
+            <td class="col-name">Suit jacket tailoring/fitting</td>
+            <td class="col-price" data-value="80">$80</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">33</td>
+            <td class="col-name">Action camera (GoPro/Insta360)</td>
+            <td class="col-price" data-value="350">$350</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">34</td>
+            <td class="col-name">Softshell jacket</td>
+            <td class="col-price" data-value="150">$150</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">35</td>
+            <td class="col-name">Ice tool / ice climbing axe</td>
+            <td class="col-price" data-value="250">$250</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">36</td>
+            <td class="col-name">Active winter pants</td>
+            <td class="col-price" data-value="90">$90</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">37</td>
+            <td class="col-name">Running shorts</td>
+            <td class="col-price" data-value="30">$30</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">38</td>
+            <td class="col-name">
+              <a href="https://avantclimbing.com/products/soft-cinch">Avant Climb "Soft-Cinch"</a>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  USE: climbing
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="70">$70</td>
+          </tr>
+          <tr class="gear-row">
+            <td class="col-index">38</td>
+            <td class="col-name"><a href="https://hownot2.com/products/caritool">Petzl Caritool</a></td>
+            <td class="col-price" data-value="13">$13</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">38</td>
+            <td class="col-name">Turtleneck</td>
+            <td class="col-price" data-value="30">$30</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">38</td>
+            <td class="col-name">Bluetooth speaker</td>
+            <td class="col-price" data-value="50">$50</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">38</td>
+            <td class="col-name">
+              <a href="https://flipper.net/products/flipper-zero">Flipper Zero</a>
+              <details class="more-info">
+                <summary>More info</summary>
+                <p>
+                  beware knock-offs/scams
+                </p>
+              </details>
+            </td>
+            <td class="col-price" data-value="170">$170</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">38</td>
+            <td class="col-name">Min/Max thermometer, rated to -40°</td>
+            <td class="col-price" data-value="20">$20</td>
+          </tr>
+
+          <!--<tr class="gear-row">
+            <td class="col-index">50</td>
+            <td class="col-name">Tie clip</td>
+            <td class="col-price" data-value="15">$15</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">50</td>
+            <td class="col-name">Swix shirt</td>
+            <td class="col-price" data-value="60">$60</td>
+          </tr>
+
+          <tr class="gear-row">
+            <td class="col-index">46</td>
+            <td class="col-name">Alaska cycling jersey</td>
+            <td class="col-price" data-value="80">$80</td>
+          </tr>-->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+    (function () {
+    const table = document.getElementById('gear-table');
+    const tbody = table.querySelector('tbody');
+    const headers = table.querySelectorAll('th[data-sort]');
+    let sortState = { col: null, dir: 1 };
+
+    function cellFor(row, colClass) {
+    return row.querySelector('.' + colClass);
+    }
+
+    function valueFor(cell, type) {
+    if (type === 'num') {
+    const v = cell.dataset.value ?? cell.textContent;
+    return parseFloat(v.replace(/[^0-9.\-]/g, '')) || 0;
+    }
+    return cell.textContent.trim().toLowerCase();
+    }
+
+    function clearArrows() {
+    headers.forEach(h => {
+    const a = h.querySelector('.arrow');
+    a.textContent = '(sort ⇅)';
+    a.classList.remove('active');
+    });
+    }
+
+    function sortBy(th) {
+    const colClass = th.dataset.sort;
+    const type = th.dataset.type;
+
+    if (colClass === 'col-index') {
+    // restore original DOM/document order
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort((a, b) =>
+    valueFor(cellFor(a, 'col-index'), 'num') - valueFor(cellFor(b, 'col-index'), 'num')
+    );
+    rows.forEach(r => tbody.appendChild(r));
+    sortState = { col: null, dir: 1 };
+    clearArrows();
+    const arrow = th.querySelector('.arrow');
+    arrow.textContent = sortState.dir === 1 ? '▲' : '▼';
+    arrow.classList.add('active');
+    return;
+    }
+
+    if (sortState.col === colClass) {
+    sortState.dir *= -1;
+    } else {
+    sortState = { col: colClass, dir: 1 };
+    }
+
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort((a, b) => {
+    const av = valueFor(cellFor(a, colClass), type);
+    const bv = valueFor(cellFor(b, colClass), type);
+    if (av < bv) return -1 * sortState.dir;
+    if (av > bv) return 1 * sortState.dir;
+    return 0;
+    });
+    rows.forEach(r => tbody.appendChild(r));
+
+    clearArrows();
+    const arrow = th.querySelector('.arrow');
+    arrow.textContent = sortState.dir === 1 ? '▲' : '▼';
+    arrow.classList.add('active');
+    th.querySelector('.arrow').textContent = sortState.dir === 1 ? '\u25b2' : '\u25bc';
+    }
+
+    headers.forEach(th => th.addEventListener('click', () => sortBy(th)));
+    })();
+
+    function valueFor(cell, type) {
+    if (type === 'num') {
+    const v = cell.dataset.value ?? cell.textContent;
+    return parseFloat(v.replace(/[^0-9.\-]/g, '')) || 0;
+    }
+    const altGroup = cell.querySelector('.alt-group');
+    const text = altGroup ? altGroup.textContent : cell.textContent;
+    return text.trim().toLowerCase();
+    }
+    </script>
+  </body>
+</html>
