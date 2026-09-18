@@ -26,11 +26,19 @@ heres more info
     <meta charset="UTF-8">
     <title>Someday List</title>
     <style>
-    :root{ --bg:#fff; --fg:#1a1a1a; --border:#ddd; --head:#f2f2f2; --hover:#f7f7f7; --accent:#2563eb; }
+    :root{ --bg:#7d7d7d; --fg:#1a1a1a; --border:#ddd; --head:#f2f2f2; --hover:#f7f7f7; --accent:#2563eb; }
     @media (prefers-color-scheme: dark){
       :root:not([data-theme="light"]){ --bg:#1a1a1a; --fg:#eee; --border:#333; --head:#242424; --hover:#242424; --accent:#60a5fa; }
     }
     body{ background:var(--bg); color:var(--fg); font-family:system-ui,sans-serif; margin:0; padding:1.5rem; }
+    .santa-sprite{
+      position:fixed;
+      top:0; left:0;
+      width:96px; height:48px;
+      pointer-events:none;
+      z-index:10;
+      will-change:transform;
+    }
     h1{ font-size:1.1rem; margin:0 0 .8rem; }
     .wrap{ overflow-x:auto; }
     table{ border-collapse:collapse; width:100%; min-width:600px; font-size:.9rem; }
@@ -56,6 +64,7 @@ heres more info
     </style>
   </head>
   <body>
+  <img id="santa-template" class="santa-sprite" src="/images/santa.png" alt="" hidden>
     <h1>Someday List</h1>
     <div class="wrap">
       <table id="gear-table">
@@ -649,6 +658,54 @@ heres more info
     const text = altGroup ? altGroup.textContent : cell.textContent;
     return text.trim().toLowerCase();
     }
+(function () {
+  const templateImg = document.getElementById('santa-template');
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  function launchSanta() {
+    const sprite = templateImg.cloneNode(true);
+    sprite.removeAttribute('hidden');
+    document.body.appendChild(sprite);
+
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const edge = Math.floor(rand(0, 4));
+    let startX, startY, endX, endY;
+
+    switch (edge) {
+      case 0: startX = rand(-100, vw); startY = -60; break;
+      case 1: startX = vw + 100; startY = rand(-60, vh); break;
+      case 2: startX = rand(-100, vw); startY = vh + 60; break;
+      default: startX = -100; startY = rand(-60, vh); break;
+    }
+    endX = rand(-150, vw + 150);
+    endY = rand(-100, vh + 100);
+
+    const flipped = endX < startX;
+    const duration = rand(6000, 14000);
+
+    sprite.animate(
+      [
+        { transform: `translate(${startX}px, ${startY}px) scaleX(${flipped ? -1 : 1})`, opacity: 0 },
+        { transform: `translate(${startX}px, ${startY}px) scaleX(${flipped ? -1 : 1})`, opacity: 1, offset: 0.05 },
+        { transform: `translate(${endX}px, ${endY}px) scaleX(${flipped ? -1 : 1})`, opacity: 1, offset: 0.9 },
+        { transform: `translate(${endX}px, ${endY}px) scaleX(${flipped ? -1 : 1})`, opacity: 0 },
+      ],
+      { duration, easing: 'linear' }
+    ).onfinish = () => sprite.remove();
+
+    scheduleNext();
+  }
+
+  function scheduleNext() {
+    setTimeout(launchSanta, rand(300, 1200)); // was rand(15000, 45000)
+  }
+
+  for (let i = 0; i < 6; i++) {
+    setTimeout(launchSanta, rand(0, 2000));
+  }
+})();
+
     </script>
   </body>
 </html>
