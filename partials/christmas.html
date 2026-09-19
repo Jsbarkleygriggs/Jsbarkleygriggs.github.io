@@ -27,7 +27,7 @@ heres more info
     <title>Someday List</title>
     <style>
     :root{
-      --bg: #00008B;
+      --bg: #00004B;
       --fg: #f5f5f5;
       --border: #4444aa;
       --head: #1111a8;
@@ -36,7 +36,7 @@ heres more info
     }
     @media (prefers-color-scheme: dark){
       :root:not([data-theme="light"]){
-        --bg: #00006B;
+        --bg: #00004B;
         --fg: #f5f5f5;
         --border: #4444aa;
         --head: #1111a8;
@@ -57,7 +57,7 @@ heres more info
       position:fixed;
       top:-40px;
       pointer-events:none;
-      z-index:5; /* above gray bg, below the santa sprites at z-index:10 */
+      z-index:5;
       will-change:transform;
       animation-name:snow-fall;
       animation-timing-function:linear;
@@ -70,6 +70,21 @@ heres more info
     }
     h1{ font-size:1.1rem; margin:0 0 .8rem; }
     .wrap{ overflow-x:auto; }
+    a:link {
+      color: #3399ff;
+    }
+
+    a:visited {
+      color: #cc66ff;
+    }
+
+    a:hover {
+      color: #ffffff;
+    }
+
+    a:active {
+      color: #ff9900;
+    }
     table{ border-collapse:collapse; width:100%; min-width:600px; font-size:.9rem; }
     th,td{ border-bottom:1px solid var(--border); padding:.45rem .6rem; text-align:left; }
     th{ background:var(--head); cursor:pointer; user-select:none; }
@@ -698,6 +713,10 @@ heres more info
     sprite.removeAttribute('hidden');
     document.body.appendChild(sprite);
 
+    const size = rand(40, 250);
+    sprite.style.width = `${size}px`;
+    sprite.style.height = `auto`;
+
     const vw = window.innerWidth, vh = window.innerHeight;
     const edge = Math.floor(rand(0, 4));
     let startX, startY, endX, endY;
@@ -748,7 +767,7 @@ heres more info
     const size = rand(10, 28);
     const startX = rand(0, window.innerWidth);
     const fallDistance = window.innerHeight + 80;
-    const drift = rand(-100, 100);       // gentle sideways sway over the fall
+    const drift = rand(-100, 100);
     const spin = `${rand(-1, 1) < 0 ? '-' : ''}${Math.floor(rand(360, 1080))}deg`;
     const duration = rand(6000, 16000);
 
