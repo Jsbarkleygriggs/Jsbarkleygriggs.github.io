@@ -26,9 +26,23 @@ heres more info
     <meta charset="UTF-8">
     <title>Someday List</title>
     <style>
-    :root{ --bg:#7d7d7d; --fg:#1a1a1a; --border:#ddd; --head:#f2f2f2; --hover:#f7f7f7; --accent:#2563eb; }
+    :root{
+      --bg: #00008B;
+      --fg: #f5f5f5;
+      --border: #4444aa;
+      --head: #1111a8;
+      --hover: #1515b8;
+      --accent: #60a5fa;
+    }
     @media (prefers-color-scheme: dark){
-      :root:not([data-theme="light"]){ --bg:#1a1a1a; --fg:#eee; --border:#333; --head:#242424; --hover:#242424; --accent:#60a5fa; }
+      :root:not([data-theme="light"]){
+        --bg: #00006B;
+        --fg: #f5f5f5;
+        --border: #4444aa;
+        --head: #1111a8;
+        --hover: #1515b8;
+        --accent: #60a5fa;
+      }
     }
     body{ background:var(--bg); color:var(--fg); font-family:system-ui,sans-serif; margin:0; padding:1.5rem; }
     .santa-sprite{
@@ -38,6 +52,21 @@ heres more info
       pointer-events:none;
       z-index:10;
       will-change:transform;
+    }
+    .snowflake{
+      position:fixed;
+      top:-40px;
+      pointer-events:none;
+      z-index:5; /* above gray bg, below the santa sprites at z-index:10 */
+      will-change:transform;
+      animation-name:snow-fall;
+      animation-timing-function:linear;
+      animation-fill-mode:forwards;
+    }
+
+    @keyframes snow-fall{
+    from{ transform:translate(0, 0) rotate(0deg); }
+    to{   transform:translate(var(--drift), var(--fall-distance)) rotate(var(--spin)); }
     }
     h1{ font-size:1.1rem; margin:0 0 .8rem; }
     .wrap{ overflow-x:auto; }
@@ -64,7 +93,8 @@ heres more info
     </style>
   </head>
   <body>
-  <img id="santa-template" class="santa-sprite" src="/images/santa.png" alt="" hidden>
+    <img id="santa-template" class="santa-sprite" src="/images/santa.png" alt="" hidden>
+    <img id="flake-template" class="snowflake" src="/images/flake.png" alt="" hidden>
     <h1>Someday List</h1>
     <div class="wrap">
       <table id="gear-table">
@@ -704,6 +734,42 @@ heres more info
   for (let i = 0; i < 6; i++) {
     setTimeout(launchSanta, rand(0, 2000));
   }
+})();
+(function () {
+  const flakeTemplate = document.getElementById('flake-template');
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  function spawnFlake() {
+    const flake = flakeTemplate.cloneNode(true);
+    flake.removeAttribute('hidden');
+    flake.removeAttribute('id');
+
+    const size = rand(10, 28);
+    const startX = rand(0, window.innerWidth);
+    const fallDistance = window.innerHeight + 80;
+    const drift = rand(-100, 100);       // gentle sideways sway over the fall
+    const spin = `${rand(-1, 1) < 0 ? '-' : ''}${Math.floor(rand(360, 1080))}deg`;
+    const duration = rand(6000, 16000);
+
+    flake.style.left = `${startX}px`;
+    flake.style.width = `${size}px`;
+    flake.style.height = `${size}px`;
+    flake.style.setProperty('--drift', `${drift}px`);
+    flake.style.setProperty('--fall-distance', `${fallDistance}px`);
+    flake.style.setProperty('--spin', spin);
+    flake.style.animationDuration = `${duration}ms`;
+
+    document.body.appendChild(flake);
+    flake.addEventListener('animationend', () => flake.remove());
+  }
+
+  function loop() {
+    spawnFlake();
+    setTimeout(loop, rand(150, 400)); // density of snowfall
+  }
+
+  loop();
 })();
 
     </script>
