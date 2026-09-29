@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="KJeWqQTkk-X4gULXFw3VEvosNWEAcsPWlkD49jURq_0" />
+    <meta name="description" content="Jonah Barkley-Griggs - freelance R&D, design, develop, deploy.">
+    <meta name="color-scheme" content="dark">
+    <title>Jonah Barkley-Griggs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="icons/favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
+    <script src="js/htmx.min.js" defer></script>
+  </head>
+  <body>
+    <div class="page">
+
+      <header>
+        <h1 class="name">Jonah Barkley-Griggs</h1>
+        <p class="tagline">Freelance R&amp;D &ensp;|&ensp;Design, Develop, Deploy </p>
+
+        <!-- ── link bar: add / remove pills as needed ── -->
+        <div class="links">
+
+          <a class="link-pill" href="https://orcid.org/0009-0007-9132-3954" target="_blank" rel="noopener">
+            <!-- ORCID icon -->
+            <img src="icons/orcid.svg" alt="" aria-hidden="true" width="14" height="14" />
+            Orcid
+          </a>
+
+          <a class="link-pill" href="https://github.com/Jsbarkleygriggs" target="_blank" rel="noopener">
+            <!-- Github / git icon -->
+            <img src="icons/Github.svg" alt="" aria-hidden="true" width="14" height="14" />
+            Github
+          </a>
+
+          <a class="link-pill" href="https://codeberg.org/J_S_Barkely-Griggs" target="_blank" rel="noopener">
+            <!-- Codeberg / git icon -->
+            <img src="icons/Codeberg.svg" alt="" aria-hidden="true" width="14" height="14" />
+            Codeberg
+          </a>
+
+          <a class="link-pill" href="https://osf.io/user/9reum" target="_blank" rel="noopener">
+            <!-- OSF / git icon -->
+            <img src="icons/OSF.svg" alt="" aria-hidden="true" width="14" height="14" />
+            OSF
+          </a>
+
+          <a class="link-pill" href="mailto:jbarkleygriggs@gmail.com">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"/>
+              <path d="M3 7l9 6 9-6"/>
+            </svg>
+            Email
+          </a>
+
+        </div>
+      </header>
+
+      <!-- ── tab nav: each button swaps #content via HTMX ── -->
+      <nav id="tabs">
+        <div class="tab active"
+          hx-get="partials/about.html"
+          hx-target="#content"
+          hx-swap="innerHTML"
+          hx-on:click="setActive(this)">
+          about
+        </div>
+        <div class="tab"
+          hx-get="partials/research.html"
+          hx-target="#content"
+          hx-swap="innerHTML"
+          hx-on:click="setActive(this)">
+          research
+        </div>
+        <div class="tab"
+          hx-get="partials/fieldwork.html"
+          hx-target="#content"
+          hx-swap="innerHTML"
+          hx-on:click="setActive(this)">
+          field work
+        </div>
+        <div class="tab"
+          hx-get="partials/projects.html"
+          hx-target="#content"
+          hx-swap="innerHTML"
+          hx-on:click="setActive(this)">
+          projects
+        </div>
+      </nav>
+
+      <main id="content">
+        <div hx-get="partials/projects.html" hx-trigger="load">
+          loading...
+        </div>
+      </main>
+
+      <footer>
+        built with <a href="https://htmx.org" style="color:inherit">htmx</a> &amp;
+        hosted on <a href="https://pages.github.com" style="color:inherit">github pages</a>
+        &nbsp; | &nbsp;
+        h/l → navigate tabs
+      </footer>
+
+    </div>
+
+    <script>
+      function setActive(el) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+      }
+    </script>
+
+    <script>
+      document.addEventListener('keydown', (e) => {
+        const tabs = [...document.querySelectorAll('.tab')];
+        const current = tabs.findIndex(t => t.classList.contains('active'));
+
+        if (e.key === 'h') {
+          const prev = (current - 1 + tabs.length) % tabs.length;
+          tabs[prev].click();
+        }
+
+        if (e.key === 'l') {
+          const next = (current + 1) % tabs.length;
+          tabs[next].click();
+        }
+      });
+    </script>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const hash = location.hash;
+        if (!hash) return;
+        const tabName = hash.slice(1).split('-')[0];
+        const tab = [...document.querySelectorAll('.tab')]
+          .find(t => t.getAttribute('hx-get') === `partials/${tabName}.html`);
+        if (tab) htmx.trigger(tab, 'click');
+      });
+
+      document.addEventListener('click', e => {
+        const a = e.target.closest('.anchor-link');
+        if (a) {
+          const activeTab = document.querySelector('.tab.active').getAttribute('hx-get').replace('partials/', '').replace('.html', '');
+          const url = `${location.origin}${location.pathname}#${activeTab}-${a.hash.slice(1)}`;
+          navigator.clipboard.writeText(url);
+        }
+      });
+    </script>
+
+    <script>
+      document.addEventListener('htmx:afterSwap', () => {
+        const el = document.getElementById(location.hash.split('-').slice(1).join('-'));
+        if (el) el.scrollIntoView();
+      });
+    </script>
+
+  </body>
+</html>
