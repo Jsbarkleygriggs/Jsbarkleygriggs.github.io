@@ -44,7 +44,14 @@ heres more info
         --accent: #60a5fa;
       }
     }
-    body{ background:var(--bg); color:var(--fg); font-family:system-ui,sans-serif; margin:0; padding:1.5rem; }
+    body{
+      background:var(--bg);
+      color:var(--fg);
+      font-family:system-ui,sans-serif;
+      margin:0;
+      padding:1.5rem;
+      isolation:isolate;
+    }
     .santa-sprite{
       position:fixed;
       top:0; left:0;
@@ -57,7 +64,7 @@ heres more info
       position:fixed;
       top:-40px;
       pointer-events:none;
-      z-index:5;
+      z-index:-1;              /* was 5 */
       will-change:transform;
       animation-name:snow-fall;
       animation-timing-function:linear;
@@ -87,14 +94,14 @@ heres more info
     }
     table{ border-collapse:collapse; width:100%; min-width:600px; font-size:.9rem; }
     th,td{ border-bottom:1px solid var(--border); padding:.45rem .6rem; text-align:left; }
-    th{ background:var(--head); cursor:pointer; user-select:none; }
+    th{ background:rgba(17,17,168,.90); cursor:pointer; user-select:none; }
     th .arrow{ opacity:.5; margin-left:4px; font-size:.75em; }
     th[data-sort]{ position:relative; }
     th[data-sort]:hover{ color:var(--accent); }
     th[data-sort] .arrow{ opacity:.35; margin-left:4px; font-size:.75em; }
     th[data-sort] .arrow.active{ opacity:1; }
     .col-price{ text-align:right; font-variant-numeric:tabular-nums; }
-    tr:hover td{ background:var(--hover); }
+    tr:hover td{ background:rgba(21,21,184,.8); }
     .alt-group{ display:flex; gap:.4em; flex-wrap:wrap; align-items:baseline; }
     .alt-sep{ color:var(--muted, #888); font-style:italic; font-size:.85em; }
     details.more-info{ margin-top:.25rem; font-size:.85rem; }
@@ -747,7 +754,7 @@ heres more info
   }
 
   function scheduleNext() {
-    setTimeout(launchSanta, rand(300, 1200)); // was rand(15000, 45000)
+    setTimeout(launchSanta, rand(25000, 45000)); // was rand(15000, 45000) // 300, 1200
   }
 
   for (let i = 0; i < 6; i++) {
@@ -785,7 +792,7 @@ heres more info
 
   function loop() {
     spawnFlake();
-    setTimeout(loop, rand(150, 400)); // density of snowfall
+    setTimeout(loop, rand(150, 300)); // density of snowfall
   }
 
   loop();
